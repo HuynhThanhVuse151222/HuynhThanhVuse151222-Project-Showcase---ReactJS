@@ -3,7 +3,9 @@ import './App.css';
 import React, { useState } from 'react';
 import  { useContext, createContext } from 'react';
 import { useEffect } from 'react';
-
+import FormatBoldOutlinedIcon from '@mui/icons-material/FormatBoldOutlined';
+import FormatItalicIcon from '@mui/icons-material/FormatItalic';
+import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined';
 export const UserContext = createContext();
 function App() {
   const [isButtonClicked, setButtonClicked] = useState(false);
@@ -29,10 +31,32 @@ function App() {
         +' id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio feugiat non pretium quis lectus suspendisse.',
         websites: 'https://gembucket.com',
         Ofiicalsite: '',
-       
+        description: [
+          'Dugue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel nasand praesent blandit lacinia erat vestibulum sed.',
+          'Augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.',
+          'Liam neque vestibulum eget vulputate ut ultrices vel.'
+        ],
+        ic:[
+    
+          'User research',
+          'Getting stakeholder',
+          'User interaction',
+        ],
+     
       
         
         });
+
+      
+      
+            
+        // useEffect(() => {
+        //   console.log(features);
+        // }, [features]);
+          
+         
+         
+     
         const handleDelete = () => {
           setData({
             show: true,
@@ -74,11 +98,7 @@ function App() {
         setNewKeyword('');
         };
 
-        const handleSubmit2 = (event) => {
-          event.preventDefault();
-          setData({ ...data, keyword: [...data.keyword, newKeyword] });
-          setNewKeyword('');
-        };
+        
         const handleDeleteKeyword = (index) => {
           const newKeywords = [...data.keyword];
           newKeywords.splice(index, 1);
@@ -88,7 +108,14 @@ function App() {
           });
         };
        
-            
+        const [inputValue, setInputValue] = useState('https://gembucket.com');
+
+        const handleReset = () => {
+          setInputValue('');
+        };
+        const handleClick = () => {
+          window.alert("Save successful!");
+        }
             
             let officialSiteDisplay;
             switch (data.officialSite) {
@@ -104,8 +131,42 @@ function App() {
               default:
                 officialSiteDisplay = 'https://gembucket.com';
             }
-            
-          
+            // Description tool
+            const [text, setText] = useState("");
+
+  const handleChange = (event) => {
+    setText(event.target.value);
+  };
+
+const [isBold, setIsBold] = useState(false);
+const [isItalic, setIsItalic] = useState(false);
+const [isUnderlined, setIsUnderlined] = useState(false);
+
+const handleBoldClick = () => {
+  setIsBold(!isBold);
+  }
+  
+  const handleItalicClick = () => {
+  setIsItalic(!isItalic);
+  }
+  
+  const handleUnderlinedClick = () => {
+  setIsUnderlined(!isUnderlined);
+  }
+          //Features data
+          const[features,setFeatures] = useState([
+
+            'Metus vitae durea nullam ipsum aliquam non mauris morbi non lectus aliquam sit amet aliquam dieam earn magna bibendum imperdiet nullam orci pede.',
+            'Ipsum ac tellus semper interdum mauris libero ullamcorper purus sit amet nulla quisque arcu libero rustrum sempereed ac lobortis vel dapibus at.',
+            'Sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt anteca veal ipsum praesent blandit lacinia erat vestibulum sed at magna.',
+          ]);
+           
+          const[imagine,setImagine] = useState([
+            {src:"/img/Rectangle 23.svg"},
+            {src: '/img/Rectangle 2.1.png'},
+            {src: '/img/Rectangle 2.svg'}
+  
+          ]);
     
   return (
     <div>
@@ -140,19 +201,19 @@ function App() {
             <textarea name="summary" cols={60} rows={30} style={{fontFamily: '"Manjari", sans-serif', padding: '10px'}} placeholder={"Tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet at neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio\tfeugiat non pretium quis lectus suspendisse."} />
             <h2>Websites</h2>
             <div className="websites">
-              <input type="text"  name='websites' placeholder='https://gembucket.com'/>
+              <input type="text"  name='websites'   value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
               <select name='officialSite'>
                 <option value="0">Official site</option>
                 <option value="1">Gembucket</option>
               <option value="2">Other</option>
                     <option value="3">Other3</option>
               </select>
-              <button type="button" onClick={handleButtonClick}>   {isButtonClicked ? 'Done' : 'Remove'}</button>
+              <button type="button" onClick={handleReset}>   {isButtonClicked ? 'Done' : 'Remove'}</button>
               <button id="aaw">Add another webside</button>
             </div>
             <div id="c-s">
               <button id="cancel"><a href="#" id="out" className="close">Cancel</a></button>
-              <button type="submit" id='save'>Save</button>
+              <button type="submit" id='save' onClick={handleClick}> Save</button>
             </div>
           </div>
         </div>
@@ -165,17 +226,22 @@ function App() {
         <div className="popup-content">
           <div className="nd-popup2">
             <h1>Description</h1>
-            <div className="toolbar" />
-           
-               
-     
-              <textarea>
+            <div className="toolbar" >
+             <FormatBoldOutlinedIcon onClick={handleBoldClick}/> 
+    <FormatItalicIcon onClick={handleItalicClick}/>
+    <FormatUnderlinedIcon onClick={handleUnderlinedClick}/>
 
-              </textarea>
+           </div>    
+     
+            <textarea  value={data.description.join("\n")} 
+            onChange={(e) => setData({...data, description: e.target.value.split("\n")})} 
+             style={{fontWeight: isBold ? 'bold' : 'normal', fontStyle: isItalic ? 'italic' : 'normal', textDecoration: isUnderlined ? 'underline' : 'none'}}  
+            />
+
               
             <div id="c-s">
               <button id="cancel"><a href="#" id="out" className="close">Cancel</a></button>
-              <button id="save">Save</button>
+              <button id="save"><a href="#">Save</a></button>
             </div>
           </div>
         </div>
@@ -186,7 +252,40 @@ function App() {
         <div className="popup-content">
           <h1>Features</h1>
           <div className="nd-popup3">
-            <div className="box" id="box1">
+          {data.ic.map((ic, index) => (
+            <div key={index}>
+        <div className="box">
+        { 
+                  imagine[index] &&<img src={imagine[index].src} />
+        }
+              <div className="fill">
+                <h2>Titles *</h2>
+                <input className="input-features" type="text"  
+                          value={data.ic[index]} 
+                           onChange={(e) => {
+      const updatedIc = [...data.ic];
+      updatedIc[index] = e.target.value;
+      setData({...data, ic: updatedIc});
+    }}
+
+                />
+                <h2>Description *</h2>
+                
+            <textarea  value={features[index]} 
+             onChange={(e) => {
+                //nó sẽ không thay đổi giá trị của mảng gốc features
+                  const updatedFeatures = [...features];
+                  updatedFeatures[index] = e.target.value;
+                  setFeatures(updatedFeatures);
+            }}
+            
+            />
+                {/* <textarea defaultValue={"Metus vitae durea nullam ipsum aliquam non mauris morbi non lectus aliquam sit amet aliquam dieam earn magna bibendum imperdiet nullam orci pede."} /> */}
+              </div>
+            </div>
+            </div>
+                  ))}
+            {/* <div className="box" id="box1">
               <img src="/img/test1.png" />
               <div className="fill">
                 <h2>Titles *</h2>
@@ -212,13 +311,15 @@ function App() {
                 <h2>Description</h2>
                 <textarea defaultValue={"Sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt anteca veal ipsum praesent blandit lacinia erat vestibulum sed at magna."} />
               </div>
-            </div>
+            </div> */}
+        
           </div>
+          
           <div id="control">
             <button id="aaf">Add another feature</button>
             <div id="c-s">
               <button id="cancel"><a href="#" id="out" className="close">Cancel</a></button>
-              <button type='submit' id="save">submit </button>
+              <button type='submit' id="save"><a href="#" >Save</a> </button>
             </div>
           </div>
         </div>
@@ -280,24 +381,18 @@ function App() {
               <img src="/img/Group 53.svg" alt="" />
             </a>
           </div>
-          <div className="dc">
-            <div className="cham">
-              <p />
-            </div>
-            <div className="write"><p>Dugue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel nasand praesent blandit lacinia erat vestibulum sed.</p></div>  
-          </div>
-          <div className="dc">
-            <div className="cham">
-              <p />
-            </div>
-            <div className="write"><p>Augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere.</p></div>  
-          </div>
-          <div className="dc">
-            <div className="cham">
-              <p />
-            </div>
-            <div className="write"><p>Liam neque vestibulum eget vulputate ut ultrices vel.</p></div>  
-          </div>
+          {data.description.map((description, index) => (
+  <div className="dc">
+  <div className="cham">
+    <p/>
+  </div>
+  <div className="write">
+    <p style={{fontWeight: isBold ? 'bold' : 'normal', fontStyle: isItalic ? 'italic' : 'normal', textDecoration: isUnderlined ? 'underline' : 'none'}}
+    key={index}>{description}</p>
+  </div>  
+</div>
+           ))}
+         
         </div>
         <div className="title2">
           <div className="tf">
@@ -312,37 +407,21 @@ function App() {
             <img className="ui" src="/img/Group 39.svg" />
           </div>
           <div className="form2">
-            <p id="p1">User research</p>
-            <div className="f1">
-              <img src="/img/Rectangle 23.svg" />
-              <div className=" div-ic">
-                <p className="ic">
-                  Metus vitae durea nullam ipsum aliquam non mauris morbi non lectus aliquam sit amet aliquam dieam earn 
-                  magna bibendum imperdiet nullam orci pede.
-                </p>
-              </div>
-              <p className="line" />
-            </div>
-            <p id="p2">Getting stakeholder</p>
-            <div className="f2">
-              <img src="/img/Rectangle 2.1.png" id="i2" />
-              <div className=" div-ic">
-                <p className="ic2">
-                  Ipsum ac tellus semper interdum mauris libero ullamcorper purus sit amet nulla quisque arcu libero rustrum sempereed ac lobortis vel dapibus at.
-                </p>
-              </div>
-              <p className="line2" />
-            </div>
-            <p id="p3">User interaction</p>
-            <div className="f3">
-              <img src="/img/Rectangle 2.svg" />
-              <div className=" div-ic">
-                <p className="ic3">
-                  Sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt anteca veal ipsum praesent blandit lacinia erat vestibulum sed at magna.
-                </p>
-              </div>
-              <p className="line3" />
-            </div>
+            
+          {data.ic.map((ic, index) => (
+        <div key={index}>
+          <p id='p1' >{ic}</p>
+           <div className="f1">
+    { 
+                  imagine[index] &&<img src={imagine[index].src} />
+}
+           <div className=" div-ic">
+           <p className="ic">{features[index]}</p>
+           </div>
+          </div>
+          </div>
+             ))}
+        
           </div>
         </div>
         <div className="title4">
