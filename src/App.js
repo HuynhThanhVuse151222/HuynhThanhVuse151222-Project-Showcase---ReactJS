@@ -108,7 +108,7 @@ function App() {
           });
         };
        
-        const [inputValue, setInputValue] = useState('https://gembucket.com');
+        const [inputValue, setInputValue] = useState('Fill another website !');
 
         const handleReset = () => {
           setInputValue('');
@@ -120,13 +120,13 @@ function App() {
             let officialSiteDisplay;
             switch (data.officialSite) {
               case '1':
-                officialSiteDisplay = 'Gembucket';
+                officialSiteDisplay = 'https://gembucket.com';
                 break;
               case '2':
-                officialSiteDisplay = 'Other';
+                officialSiteDisplay = ' www.google.com.';
                 break;
               case '3':
-                officialSiteDisplay = 'Other3';
+                officialSiteDisplay = ' www.facebook.com, ';
                 break;
               default:
                 officialSiteDisplay = 'https://gembucket.com';
@@ -180,9 +180,9 @@ const handleBoldClick = () => {
         <div id="xmas-popup" className="popup" href="#">
         <div className="popup-content">
           <div className="nd-popup">
-            <h1>Project</h1>
-            <h2>Name *</h2>
-            <input className="input1" type="text" name='name'  placeholder='Gembucket'/>
+          <h1>Project</h1>
+  <h2>Name *</h2>
+  <input className="input1" type="text" name='name' placeholder={data.name} />
             <h2>Keywords *</h2>
             <input className="input1" type="text"  name='keyword' 
              value={newKeyword}
@@ -194,19 +194,21 @@ const handleBoldClick = () => {
           {keyword}
           <button onClick={() => handleDeleteKeyword(index)}>x</button>
         </p>
-           ))}
+           ))}  
             </div>
 
             <h2 id="summ">Summary *</h2>
-            <textarea name="summary" cols={60} rows={30} style={{fontFamily: '"Manjari", sans-serif', padding: '10px'}} placeholder={"Tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet at neque aenean auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio\tfeugiat non pretium quis lectus suspendisse."} />
+            <textarea name="summary" cols={60} rows={30} 
+            style={{fontFamily: '"Manjari", sans-serif', padding: '10px'}}
+             placeholder={data.summary} />
             <h2>Websites</h2>
             <div className="websites">
               <input type="text"  name='websites'   value={inputValue} onChange={(e) => setInputValue(e.target.value)}/>
               <select name='officialSite'>
                 <option value="0">Official site</option>
                 <option value="1">Gembucket</option>
-              <option value="2">Other</option>
-                    <option value="3">Other3</option>
+              <option value="2">Google</option>
+                    <option value="3">Facebook</option>
               </select>
               <button type="button" onClick={handleReset}>   {isButtonClicked ? 'Done' : 'Remove'}</button>
               <button id="aaw">Add another webside</button>
@@ -215,6 +217,7 @@ const handleBoldClick = () => {
               <button id="cancel"><a href="#" id="out" className="close">Cancel</a></button>
               <button type="submit" id='save' onClick={handleClick}> Save</button>
             </div>
+               
           </div>
         </div>
       </div>
@@ -280,7 +283,6 @@ const handleBoldClick = () => {
             }}
             
             />
-                {/* <textarea defaultValue={"Metus vitae durea nullam ipsum aliquam non mauris morbi non lectus aliquam sit amet aliquam dieam earn magna bibendum imperdiet nullam orci pede."} /> */}
               </div>
             </div>
             </div>
